@@ -42,6 +42,18 @@
             $('div[id$=bird]').addClass('bird');
             $('.bird').css({'border': '1px solid #ccc', 'width': '200px', 'margin': '10px'})
 
+            /*
+            [attr*=value]   value是目标属性值的一部分，则匹配成功
+            [attr|=value]   目标属性的值等于value，或者以value-开头
+            [attr~=value]   目标属性的值包含value中的任何一个子串
+            [attr$=value]   目标属性的值以value结尾
+            [attr=value]    目标属性的值等于value
+            [attr^=value]   目标属性的值以value开头
+            [attr!=value]   目标属性的值不等于value
+            [attr=value] [attr=value] [attr=value]  目标元素同时匹配多个属性&值
+            */
+
+
             //3.向DOM中添加html  .html()方法无参数时获取元素内的html文本；有参数时设定元素内部的html文本
 //            alert($('.content').html());
 //            $('.content').html('<div class="main">Hello jQuery.</div>');
