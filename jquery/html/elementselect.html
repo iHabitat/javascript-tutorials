@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+</head>
+<body>
+
+<!--  example1  -->
+<ul>
+    <li><a href=http://www.google.com/analytics>Google Analytics</a></li>
+    <li><a href=http://www.yahoo.com/sports>Yahoo Sports</a></li>
+</ul>
+
+<!--  example2  -->
+<div id="red-bird"></div>
+<div id="blue-bird"></div>
+<div id="gree-bird"></div>
+<div id="black-bird"></div>
+
+
+<!-- example3 -->
+<div class="content">
+    <p>I run 4 times a week</p>
+    <p>I lift weights 3 times a week.</p>
+</div>
+<script>
+    jQuery(function ($) {
+        $(document).ready(function () {
+            //1.通配符属性选择器*  选取所有ul li 后代标签a标签的href属性值中包含google.com的元素
+            $('ul li a[href*="google.com"]').addClass('google-icon');
+            $('.google-icon').css(
+                {
+                    'background-color': '#6594ed',
+                    'padding': '0px 30px',
+                    'background-repeat': 'no-repeat'
+                });
+
+            //2.选取属性值以某个单词结尾的元素
+            $('div[id$=bird]').addClass('bird');
+            $('.bird').css({'border': '1px solid #ccc', 'width': '200px', 'margin': '10px'})
+
+            //3.向DOM中添加html  .html()方法无参数时获取元素内的html文本；有参数时设定元素内部的html文本
+//            alert($('.content').html());
+//            $('.content').html('<div class="main">Hello jQuery.</div>');
+
+            //4.设置DOM元素文本  .text()方法无参数时获取元素文本；有参数时设定元素文本
+//            alert($('.content').text());
+//            $('.content').text('Test 1 2 3');
+
+            //5.在目标元素内追加或在其前面插入html
+            $('.content').append('<p>I ride my bile 3 times a week.</p>');
+            $('.content').prepend('<p>I sleeping</p>');
+
+            //6.在目标元素之前或之后添加html
+            $('.content').after('<p>I had inserted after content');
+            $('.content').before('<p> I had inserted before content');
+
+            //7.删除html元素
+//            $('.content').remove();
+
+            //8.克隆html元素
+            $('.content').clone().append('.content');
+
+            //9.jQuery中的css方法
+            /*
+            .css()  获取或设定元素的css属性
+            .addClass()  添加某个或某些css类  多个参数时用空格分开
+            .hasClass()  检查元素是否具有某个类
+            .removeClass()  删除某个或某些css类 多个参数时用空格分开
+            .toggleClass()  切换某个css类，没有就加上，有就删除
+             */
+
+        });
+    })
+</script>
+</body>
+</html>
