@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+    <style>
+        ul {width:200px;font-family: Arial;}
+        ul li{border-bottom: 1px solid #333;}
+        ul li a{text-decoration: none;}
+    </style>
+</head>
+<body>
+
+//example1&example4
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+    <tr>
+        <td>Paper Tower</td>
+        <td>The most absortbent paper towels.</td>
+        <td>$18.99</td>
+    </tr>
+    <tr>
+        <td>Paper Napking</td>
+        <td>Perfect for your outdoor gathering.</td>
+        <td>$16.99</td>
+    </tr>
+    <tr>
+        <td>Paper Plates</td>
+        <td>The best value.</td>
+        <td>$5.99</td>
+    </tr>
+    <tr>
+        <td>Paper Forks</td>
+        <td>The essential picnic accessory.</td>
+        <td>$2.99</td>
+    </tr>
+</table>
+
+//example2
+    <div id="sidebar">
+        <h1>My Sidebar</h1>
+        <ul>
+            <li><a href="ajax-demo.html">Home</a> </li>
+            <li><a href="ajax-demo.html">About Us</a> </li>
+            <li><a href="ajax-demo.html">Customer Service</a> </li>
+            <li><a href="ajax-demo.html">Contact Us</a> </li>
+            <li><a href="ajax-demo.html">Coupons</a> </li>
+        </ul>
+    </div>
+
+//example3
+    <div id="main">
+        <div class="error"></div>
+        <div class="error">This is my error message</div>
+        <div class="content">
+            <p>This is my content</p>
+        </div>
+        <div class="alternate">
+            <p>This is alternate content.</p>
+        </div>
+    </div>
+
+
+<script>
+    jQuery(function ($) {
+        $(document).ready(function () {
+            //1.奇数行和偶数行过滤器
+           $('tr:even').css('background','#dedede');
+           $('tr:odd').css('background','#ffffff');
+
+            //2.过滤器：列表或集合的第一个、最后一个元素
+            $('ul li:first').css('border','none');
+            $('ul li:last').css('border','none');
+
+            //3.找出不包含任何子元素或文本的元素
+            $('.error:empty').css('display','none');
+
+            //4.根据元素包含的文本过滤元素
+            $('tr td:contains("Paper Tower")').css('border','1px dashed #333');
+
+            //:header 匹配标题元素等标签
+            //:not    不匹配后面选择器的元素
+            //:eq(index) 匹配顺序号等于index的元素
+            //:gt(index) 匹配顺序号大于index的元素
+            //:lt(index) 匹配顺序号小于index的元素
+            //:first-child、:last-child、:only-child、nth-child(index) 分别匹配第一个、最后一个、独生子元素、第index个子元素
+            //:has(p)    匹配包含p元素的元素
+            //:parent    匹配拥有子元素的元素
+            //:hidden    匹配不可见的元素
+            //:visible   匹配可见的元素
+            //:animated  匹配正处于动画过程中的元素
+
+        });
+    })
+</script>
+</body>
+</html>
