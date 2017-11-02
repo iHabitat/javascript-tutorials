@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReadingList>
+    <Book author="Author One">
+        <Title>Title1</Title>
+        <Category>Travel</Category>
+        <PubDate>06/2000</PubDate>
+        <JSBN>978569670</JSBN>
+    </Book>
+    <Book author="Author Two">
+        <Title>Title2</Title>
+        <Category>Biography</Category>
+        <PubDate>05/2001</PubDate>
+        <JSBN>485969700</JSBN>
+    </Book>
+    <Book author="Author Three">
+        <Title>Title3</Title>
+        <Category>Travel</Category>
+        <PubDate>06/2000</PubDate>
+        <JSBN>978569670</JSBN>
+    </Book>
+    <Book author="Author four">
+        <Title>Title4</Title>
+        <Category>Travel</Category>
+        <PubDate>06/2000</PubDate>
+        <JSBN>978569670</JSBN>
+    </Book>
+    <Book author="Author Five">
+        <Title>Title5</Title>
+        <Category>Travel</Category>
+        <PubDate>06/2000</PubDate>
+        <JSBN>978569670</JSBN>
+    </Book>
+</ReadingList>

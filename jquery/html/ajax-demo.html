@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+<button class="ajaxMethod">发送一个get请求并返回数据</button>
+<div id="demo"></div>
+<div id="container"></div>
+<p id="test" style="color: #ff0000;border: 1px solid #000000;">这是使用.css()方法的示例文本</p>
+<button class="red">获取示例文本的颜色值</button>
+<button class="border-width">使用函数改变示例文本的border</button>
+
+<br/>
+<br/>
+<div id="content">
+</div>
+
+<!--解析XML并生成html-->
+<ul id="books1">
+    <h2>1:My Favorite Books</h2>
+</ul>
+
+<!--解析JSON并生成HTML-->
+<ul id="books2">
+    <h2>2:My Books</h2>
+</ul>
+
+<script>
+    //与DOM没有任何交互的原生js代码可以不放在document.ready()实践中。比如变量、数组的赋值等等。
+    //所有jQuery代码都放在document.ready()事件处理方法当中，保证他们在DOM完全加载之后(图片尚未加载完)才开始执行
+    //window.load()方法DOM完全加载完之后，且等待所有的图片加载完之后才执行
+
+    var numShows = 10;
+    var numTickets = 10;
+    jQuery(function ($) {
+        //这样书写目的是防止jQuery的别名$与其他库的$发生冲突
+
+        //example 1
+        for (var i = 0; i < numTickets; i++) {
+            var numTotal = i + 1;
+            $('#container').append("<p>There are " + numTotal + "tickets available</p>");
+            //返回css属性值,例如:
+            $('.red').click(function () {
+                alert($('#test').css('color'));
+            });
+            //使用函数设置css属性和值，例如:
+            $('.border-width').click(function () {
+                $('#test').css('border-width', function (i) {
+                    return i + 10;
+                });
+            });
+            //使用.css()设置多个css属性和值对
+            $('#container').css({
+                'border': '1px solid #333',
+                'color': 'white',
+                'background-color': '#98bf21',
+                'font-family': 'Arial',
+                'font-size': '20px',
+                'padding': '5px'
+            });
+        }
+
+
+        $('button').click(function () {
+//            $.get("demo_text.txt", function (data, status) {
+//                $('#demo').html(data).css("color", "red");
+//            });
+
+            $("#demo").load("../resources/demo_text.txt");
+        });
+
+        $('#content').load('ajax-content-1.html', function (response,status,xhr) {
+            console.log('ajax 返回错误响应码'+xhr.status);
+            if (xhr.status == 404 || xhr.state == 500) {
+                $('#content').html('There has been an error,please try again later!');
+            }else {
+
+            }
+        });
+
+        $('#content').load('ajax-content.html .special');
+
+
+        //解析内部XML数据并生成HTML
+        $.ajax({
+            type:'GET',
+            dataType:'XML',
+            url:'../resources/test.xml',
+            success:parseXML
+        });
+        function parseXML(xml) {
+            $(xml).find('Book').each(function () {
+               var author = $(this).attr('author');
+               var title  = $(this).find('Title').text();
+               var category = $(this).find('Category').text();
+               var pubdate = $(this).find('PubDate').text();
+
+               $('<li></li>').html('<b>Title:</b> ' +title+'</br><b>Author:</b> '+author+'</br>'+category+'-'+pubdate).appendTo('#books1');
+
+            });
+        }
+
+        //解析内部JSON并生成HTML
+        $.ajax({
+            type:'GET',
+            dataType:'JSON',
+            url:'../resources/test.json',
+            success:parseJSON
+        });
+        function parseJSON(data) {
+            console.log(data);
+            $.each(data.books,function (i,item) {
+               $('<li></li>').html('<b>Title:</b> '+item.title+'</br><b>Author:</b> ' +item.author +'</br>' + item.category+ '-'+ item.pubdate).appendTo('#books2');
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

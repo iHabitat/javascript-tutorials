@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+
+<form id="content-form">
+    <ul>
+        <li><label>Name</label>
+            <input type="text" id="name" name="name"/>
+        </li>
+
+        <li><label>Email</label>
+            <input type="text" id="email" name="email"/>
+        </li>
+
+        <li><label>Phone</label>
+            <input type="text" id="phone" name="phone"/>
+        </li>
+
+        <li><label>Message</label>
+            <textarea name="message" id="message"></textarea>
+        </li>
+
+        <li><input type="submit" id="submit"/></li>
+
+    </ul>
+</form>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(document).ready(function () {
+            $('#submit').bind('click', function () {
+                var nameVal = $('#name').val();
+                var emailVal = $('#email').val();
+                var phoneVal = $('#phone').val();
+                var msgVal = $('#message').val();
+
+                $.post('../resources/form.php',{name:nameVal,phone:phoneVal,email:emailVal,message:msgVal},function (data) {
+                    console.log(data);
+                   alert('successful submission!');
+                });
+
+                return false;
+            });
+        });
+    });
+</script>
+</body>
+</html>
