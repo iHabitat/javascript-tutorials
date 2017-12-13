@@ -245,10 +245,12 @@ keyup()     弹起
                     var inputText = $(this).val();
                     var numChar = inputText.length;
                     var charRemain = numChar-maxNum;
-                    if (numChar <= maxNum){
+                    if (numChar > maxNum) {
+                        if (numChar > maxNum) {
+                            event.preventDefault();
+                        }
+                    } else {
                         $('.counter').text(charRemain);
-                    } else if (numChar > maxNum){
-                        event.preventDefault();
                     }
                 }
             });
