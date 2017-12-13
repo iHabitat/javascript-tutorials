@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery event</title>
+
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        #content {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+
+<body>
+
+<div class="gallery"></div>
+
+<!--
+<img src="../resources/IMG_11.JPG" id="portrait" />
+-->
+
+<div class="container">
+    <div class="box"></div>
+</div>
+
+
+<div class="genra">
+    <div class="album-cover"></div>
+</div>
+<div class="genra">
+    <div class="album-cover"></div>
+</div>
+<div class="genra">
+    <div class="album-cover"></div>
+</div>
+
+<!-- example 7-->
+<h1>hello jQuery</h1>
+<P>this is the first paragraph </P>
+<a href="#" class="content-link">Show More</a>
+<div id="content">
+    <p>this is the second paragraph.it's content</p>
+</div>
+
+
+<!-- example8 -->
+<h1>hello hello hello hello</h1>
+<div class="cart">
+    <h2>Shpping Cart</h2>
+</div>
+<div class="product">
+    <h3>Beautiful Girl</h3>
+    <div class="product-image"><img src="../resources/testimagel.jpg" title="oh,this is a Girl" alt="beautiful girl"/>
+    </div>
+    <p class="info">this is a beautiful girl</p>
+    <p class="price">$299.99</p>
+    <p class="add-to-cart">Double-click to buy me</p>
+</div>
+
+<!-- example10 -->
+<img src="../resources/rollover_off_btn.gif" class="button" alt="Button" />
+
+<!-- example11 -->
+<input type="text" name="firstname" id="firstname" />
+
+<!-- example 12 -->
+<textarea cols="50" rows="5" id="status"></textarea>
+<div class="counter"></div>
+
+<!--
+ 在事件监听过程中两种触发事件的方式：事件捕获和事件冒泡
+    事件捕获过程是指事件在DOM元素中向后代元素下沉
+    事件冒泡过程是指事件从发生事件的源元素通过DOM向上冒泡。除了focus和blur事件之外的大多数事件都会冒泡。速度更快，效率更高
+    jquery使用事件冒泡的方式处理所有事件
+    jQuery库提供了3个方法来绑定元素的事件处理函数。即bind()、live()、delegate()
+
+    1.bind()
+    $('.mylink').bind('click','alertMe');//为所有.mylink元素绑定click事件，当click事件发生时，会自动调用alertMe函数
+-->
+
+
+<!--  文档和窗口事件
+.ready()    检查HTML文档加载完成时触发
+.load()     HTML所有组件全部加载完成时触发
+.unload()   当浏览器窗口关闭、用户单击一个新链接、在地址栏输入新网址即将打开一个新页面时触发
+.resize()   当用户改变浏览器窗口大小时触发
+.scroll()   当用户滚动窗口时触发
+.error()    当HTTP请求遇到错误时触发
+-->
+
+
+<!--  鼠标驱动事件
+click       单击
+dbclick     双击
+mousedown   按下
+mouseup     抬起
+mouseenter  进入某一元素
+mouseleave  离开某一元素
+mousemove   在某一元素区域内移动
+mouseout    鼠标离开某一元素及其父元素时
+mouseover   鼠标进入某一元素及其父元素时
+
+-->
+
+
+<!--  捕获表单事件
+change()    表单项的值改变时触发
+focus()     按TAB键进入某个文本域或者选择某个文本域（得到焦点）时触发
+focusin()   一个元素或它的子元素得到焦点时触发
+focusout()  一个元素或它的子元素失去焦点时触发
+blur()      文本域(input:text)或者文本框(textarea)失去焦点时触发
+select()    元素内的文本被选中时
+submit()    表单提交时触发（单击submit按钮或者按下回车键）
+reset()     表单使用input type="reset"重置表单数据时触发
+
+-->
+
+<!--  捕获键盘事件
+keydown()   按下
+keypress()  一个键被按下一次或者多次时
+keyup()     弹起
+-->
+<script>
+
+    var imgArray = ['IMG_1.JPG', 'IMG_2.JPG', 'IMG_3.JPG', 'IMG_4.JPG', 'IMG_5.JPG'];
+    var imgArrLength = imgArray.length;
+
+    jQuery(function ($) {
+        $(document).ready(function () {
+            alert('The DOM is ready');
+
+            //1.使用load事件预加载图片.只有当图片加载完成之后才添加到DOM中，因此加载顺序与图片大小有关
+            for (var i = 0; i < imgArrLength; i++) {
+                $('<img />').attr('src', '../resources/' + imgArray[i]).on('load', function () {
+                    //.load(function(){})在高版本jQuery中已经废弃。要使用.on('load',function(){})替代
+//                    $('.gallery').append($(this));
+                    //this关键字引用的是当前正在被处理的<img>标签对用的元素对象
+                });
+            }
+
+            //2.当用户离开页面时显示一条提示信息。即点击关闭按钮或者在地址栏输入新网址即将打开新页面的时候
+            $(window).bind('unload', function () {
+            });
+
+            $(window).on('beforeunload', function () {
+                return 'Are you sure you want to leave?';
+            });
+
+            //3.使用error事件显示备用图片。可以检测到图片丢失并设置一张默认图片
+            $('#portrait').on('error', function () {
+                $(this).attr('src', '../resources/IMG_2.JPG');
+            });
+
+            //4.bind()方法  绑定事件处理函数 仅适用于DOM中已经存在的元素
+            $('.box').css({'background-color': 'red', 'width': '100px', 'height': '100px'});
+//            $('.box').bind('click',function () {
+//                //clone出来的元素未绑定click事件
+//                $(this).clone().appendTo('.container');
+//            });
+
+            //5.live()方法 绑定事件处理函数  适用于DOM当前存在的元素或将来可能存在（动态生成）的元素
+            //该方法缺点是不支持链接调用方式
+//            $('.box').on('click', function () {
+//                $(this).clone().appendTo('.container');
+//            });
+
+            //6.delegate()方法
+            $('.container').delegate('.box', 'click', function () {
+                $(this).clone().appendTo('.container');
+            });
+
+            //.delegate()方法支持链式调用  ？？为什么不行
+            $('.genra').css({'background-color': 'blue', 'width': '100px', 'height': '50px', 'margin': '10px'});
+            $('.genra').first().delegate('.album-cover', 'click', function () {
+                $(this).clone().addClass('rock').appendTo('.genra:first');
+            });
+
+            //7.单击鼠标触发添加或删除页面内容的行为
+            $('.content-link').bind('click', function () {
+                $('#content').toggle();
+            });
+
+            //8.使用jQuery中的hover事件添加个性化的提示信息；不希望说明一直显示，只有鼠标放在元素上的时候才显示
+//            $('.product-image img').bind({
+//                mouseenter: function () {
+//                    var toolTip = $(this).attr('title');
+//                    $('.info').after('<p class="tooltip">' + toolTip + '</p>');
+//                },
+//                mouseleave: function () {
+//                    $('p.tooltip').hide();
+//                }
+//            });
+
+
+            //等同于上例
+            $('.product-image img').hover(
+                function () {
+                    var tooltip = $(this).attr('title');
+                    $('.info').after('<p class="tooltip">' + tooltip + '</p>');
+                },
+                function () {
+                    $('p.tooltip').hide();
+                });
+
+            //9.使用mousedown、mouseup事件实现添加到购物车功能
+            $('.product').bind({
+                mousedown:function () {
+                   $(this).css('border','3px solid red');
+                },
+                mouseup:function () {
+                    $(this).css('border','3px solid #cccccc');
+                    $('.cart').append('Apple iPhone4 is now in the cart<br />');
+                    $('.cart h2').text('Shopping Cart contains 1 item!');
+                    $('.product').hide();
+                }
+            });
+
+            //10.实现图片翻转
+            $('.button').hover(
+                function () {
+                   $(this).attr('src','../resources/rollover_on_btn.gif');
+                },
+                function () {
+                   $(this).attr('src','../resources/rollover_off_btn.gif');
+                }
+            );
+
+
+            //11.获得焦点时添加边框
+            $('#firstname').bind('focus',function () {
+               $(this).css('border','1px solid red');
+            });
+
+
+            //12.
+            var maxNum = 100;
+            $('#status').bind({
+                keypress: function () {
+                    var inputText = $(this).val();
+                    var numChar = inputText.length;
+                    var charRemain = numChar-maxNum;
+                    if (numChar <= maxNum){
+                        $('.counter').text(charRemain);
+                    } else if (numChar > maxNum){
+                        event.preventDefault();
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+</body>
+</html>
