@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: #0c5460;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script>
+    //null 空对象指针，现在没有以后可能会有;undefined 未定义，现在没有以后也不会有
+    /*
+        0和空字符串  "有坑没种树"  开辟了内存
+        null、undefined  "连坑都没有"  没有开辟内存
+
+        出现null的情况：使用id或name没有捕获到元素时；使用正则没有捕获到内容时；给对象清空内存时
+        出现undefined的情况：
+            数组索引不存在；获取对象属性值时属性名不存在的情况；
+            函数的形参没有赋值时
+            函数没有return时函数的返回值
+     */
+    var a = document.getElementById("box");
+    console.log(a);//null
+
+    var arr = [23, 56, 0];
+    console.log(arr[5]);//undefined
+
+    var obj = {name: "ddd"};
+    console.log(obj.age);//undefined
+
+
+    //object 对象
+    /*
+         对象数据类型
+         每个键值对用逗号隔开，键值之间用冒号隔开
+         {}，[] 都会开辟新的空间地址->把对象中的属性名和属性值存储到这个堆内存->把这个空间地址赋值给变量
+     */
+    //获取属性值
+    var obj = {name: "zhufeng", 1: 8};
+    console.log(obj.name);//1.对象.属性名
+    console.log(obj["1"]);//2.对象["属性名"]   key为数字时必须使用该方式
+    console.log(obj.age);//undefined
+
+    //新增键值对
+    obj.age = 9;
+    obj["age"] = 9;
+
+    //修改属性值
+    obj.name = "培训";
+
+    //删除键值对
+    delete obj.name;
+
+    var ary = [23, 56, "hello", null, undefined, {}];
+    console.log(ary.length);//数组长度
+    console.log(ary[2]);//访问第三项
+    ary[ary.length] = 100;//末尾新增
+
+    /*
+    [] == false  //true
+    ![] == false //true   先取反，在进行布尔值比较
+     */
+
+
+    //数据类型检测
+    /*
+        typeof 检测数据类型，返回值是字符串，字符串的内容是当前变量的数据类型
+            该方法检测不了对象数据类型下面具体的对象，数组,正则
+
+        instanceof  检测当前实例是否属于某个类，返回值是布尔值
+        constructor 检测当前实例的构造函数
+        Object.prototype.toString.call()
+     */
+    console.log((typeof 18));//"number"
+    console.log((typeof "8"));//"string"
+    console.log((typeof true));//"boolean"
+    console.log((typeof null));//"object"
+    console.log((typeof undefined));//"undefined"
+    console.log((typeof {}));//"object"
+    console.log((typeof []));//"object"
+    console.log((typeof function () {
+    }));//"function"
+
+    console.log(([] instanceof Array));
+
+
+    //语句
+    /*
+        if语句：
+
+        三元运算符：处理简单的if else
+            1==="1" ? console.log(true):console.log(false)
+        switch case语句：  绝对值比较
+
+
+     */
+
+    var num = null || 10;//num=10
+    var num1 = null || undefined;//num = undefined
+    var num2 = 99 || 10;//num=99
+    // 先判断第一个值转boolean值是true还是false，如果是true，就直接取第一个值；如果是false，不管第二个是true还是false，都去第二个值
+
+    1 === "1" ? console.log(true) : console.log(false);
+
+    var num = 10;
+    switch (num) {
+        case "10":// num === "10"  执行的是绝对比较
+            console.log("case1");
+            break;
+        case 10:
+            console.log("case2");
+            break;
+        default://当case中的情况都返回false，执行此处的代码。
+            console.log("default");
+    }
+
+
+</script>
+<script>
+    //数组的创建方式
+    var arr1 = new Array('a', 'b', 'c');//预定义数组，在创建时初始化
+    var arr2 = ['a', 'b', 'c'];//数组字面量方式
+    var arr3 = new Array();//创建空数组
+    var arr4 = [];//创建空数组
+
+    /*
+       JS对象：属性和方法的容器
+       对象的属性之间要用逗号隔开
+       对象的方法定义了一个函数，并作为对象的属性存储
+       对象方法通过添加（）调用 --作为一个函数
+    */
+
+    //对象的创建方式
+    var person1 = {
+        name: 'Tom', age: 21, eat: function () {
+        }
+    };
+    var person2 = new Object();
+    person2.name = 'Tom';
+    person2.age = 21;
+    person2.eat = function () {
+    };
+
+    //最常用的对象创建方式
+    function createPerson() {
+        var obj = new Object();
+        obj.name = "zhangsi";
+        obj.age = 21;
+        obj.firstFn = function () {
+        }
+        obj.secondFn = function () {
+        }
+        return obj;
+    }
+
+    var onePerson = createPerson();
+    document.write(onePerson.name + ":" + onePerson.age);
+
+    function createAnotherPerson() {
+        this.name = "lili";
+        this.age = 12;
+        this.firstFn = function () {
+        }
+        this.secondFn = function () {
+        }
+
+    }
+
+    var twoPerson = new createAnotherPerson;
+    document.write("<br \>" + twoPerson.name + ":" + twoPerson.age);
+
+
+    //demo
+    var oBox = document.getElementById("box");
+    oBox.onclick = function () {
+        console.log("clicked");//点击一次执行一次这个函数
+        event.stopPropagation();
+//        event.preventDefault();
+    };
+
+
+    var oBody = document.body;
+    oBody.onclick = function (event) {
+        if (oBody.style.backgroundColor === "black") {
+            oBody.style.backgroundColor = "white";
+        } else {
+            //    (color==="" ||color==="white")
+            oBody.style.backgroundColor = "black";
+        }
+    }
+
+        var oBody = document.body;
+        oBody.onclick = function () {
+            switch (oBody.style.backgroundColor) {
+                case "":
+                    oBody.style.backgroundColor = "red";
+                    break;
+                case "white":
+                    oBody.style.backgroundColor = "red";
+                    break;
+                case "red":
+                    oBody.style.backgroundColor = "yellow";
+                    break;
+                case "yellow":
+                    oBody.style.backgroundColor = "green";
+                    break;
+                default:
+                    oBody.style.backgroundColor = "white";
+            }
+        };
+
+
+</script>
+</body>
+</html>

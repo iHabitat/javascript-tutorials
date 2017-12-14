@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="../jquery/css/bootstrap.min.css"/>
+
+    <title>Title</title>
+</head>
+<body>
+
+<div class="input-group input-group-sm">
+    <span class="input-group-addon" id="sizing-addon1">第一个数</span>
+    <input type="text" class="form-control" id="first"/>
+</div>
+
+<div class="input-group input-group-sm">
+    <span class="input-group-addon" id="sizing-addon2">第二个数</span>
+    <input type="text" class="form-control" id="twice"/>
+</div>
+
+<div class="input-group input-group-sm">
+    &nbsp;<button type="button" class="btn btn-outline-secondary btn-lg" id="doadd">+</button>
+    &nbsp;<button type="button" class="btn btn-outline-secondary btn-lg" id="subtract">-</button>
+    &nbsp;<button type="button" class="btn btn-outline-secondary btn-lg" id="ride">*</button>
+    &nbsp;<button type="button" class="btn btn-outline-secondary btn-lg" id="devide">/</button>
+</div>
+<div class="input-group input-group-sm">
+    <p id="result"></p>
+</div>
+
+<script src="../jquery/js/jquery-3.2.1.js"></script>
+<script src="../js/calculator.js"></script>
+<script>
+    $(document).ready(function () {
+
+        jQuery(function ($) {
+            $('#doadd').on('click', function () {
+                add();
+            });
+            $('#subtract').on('click', function () {
+                subtract();
+            });
+            $('#ride').on('click', function () {
+                ride();
+            });
+            $('#devide').on('click', function () {
+                devide();
+            });
+
+        });
+    });
+</script>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button onclick="getElementById('demo1').innerHTML = Date()">现在的时间是：</button>
+<p id="demo1"></p>
+<p>=========================</p>
+
+<p>点击按钮执行<em> diaplayData() </em>函数</p>
+<button onclick="displayDate()">点击</button>
+<p id="demo2"></p>
+<p>=========================</p>
+
+<p>字符串转义</p>
+<p id="demo3"></p>
+<p>=========================</p>
+
+<p id="demo4"></p>
+<p>=========================</p>
+
+<p>typeof操作符返回</p>
+<p id="demo5"></p>
+<p>=========================</p>
+<p>利用constructor判断是不是数组</p>
+<p id="demo6"></p>
+<p>=========================</p>
+<p>利用constructor判断是不是日期</p>
+<p id="demo7"></p>
+<p>=========================</p>
+
+<input typeof="button" value="测试try..catch" onclick="testTry()">
+<p>=========================</p>
+
+<p>请输出一个 5 到 10 之间的数字:</p>
+
+<input id="demo8" type="text">
+<button type="button" onclick="testThrow()">测试输入</button>
+<p id="message"></p>
+<script>
+
+    //html常见的事件:可以是浏览器行为，也可以是用户行为
+    /*
+    onchange html元素改变时
+    onclick 点击
+    onmouseover 鼠标在元素上移动
+    onmouseout 鼠标在元素上移开
+    onkeydown 按下键盘
+    onload 浏览器已完成页面的加载
+    */
+
+    function displayDate() {
+        document.getElementById('demo2').innerHTML = Date();
+    };
+
+
+    //字符串
+    var x = 'It\'s alright';
+    var y = "He is called\"John\"";
+    // language=HTML
+    document.getElementById('demo3').innerHTML = x + "<br \>" + y;
+
+    //
+    var name1 = "John";//string
+    var name2 = new String("John");//object
+    document.getElementById('demo4').innerHTML = typeof name1 + " " + typeof name2;
+    if (name1 === name2) {
+        console.log("因为数据类型不一样，所以不相等");
+    } else {
+        console.log("通过字面量创建的string对象会拖慢执行速度");
+    }
+
+    //JS标签
+    /*
+        加标签语法
+            label:
+            statements
+        continue & break标签语法：
+            continue lablename
+            break lablename
+
+        使用规则
+        continue语句  带或不带标签引用 只能在循环中使用
+        break        不带标签引用 只能在循环和switch中
+        break        带标签引用   可以跳出任何JS代码块
+     */
+    cars = ["BMW", "Volvo", "Saab", "Ford", "lexus"];
+    list:{
+        document.write("<br \>");
+        document.write(cars[0] + "<br \>");
+        document.write(cars[1] + "<br \>");
+        document.write(cars[2] + "<br \>");
+        break list;  //break标签引用，此处不能使用continue
+        document.write(cars[3] + "<br \>");
+        document.write(cars[4] + "<br \>");
+        document.write(cars[5] + "<br \>");
+    }
+
+    outerloop:
+        for (var i = 0; i < 10; i++) {
+            innerloop:
+                for (var j = 0; j < 10; j++) {
+                    if (j > 3) {
+                        break;
+                    }
+                    if (i == 2) {
+                        break innerloop;
+                    }
+                    if (i == 4) {
+                        break outerloop;
+                    }
+                    document.write("<br \>i=" + i + "    j=" + j + " ");
+                }
+        }
+
+    var person1 = undefined;//值为undefined（空），类型为undefined
+    console.log(typeof(person1));//undefined
+    var person2 = null;//值为null（空），类型为object
+    console.log(typeof(null));//object
+    var person3;//值为undefined(空），类型为undefined
+    console.log((null === undefined));//false
+    (null == undefined);//true
+
+
+    //typeof  检测数据类型string number boolean object function undefinde
+    document.getElementById('demo5').innerHTML =
+        typeof "John" + "<br\>" +
+        typeof 3.14 + "<br\>" +
+        typeof NaN + "<br\>" +
+        typeof false + "<br\>" +
+        typeof [1, 2, 3, 4] + "<br\>" +
+        typeof {name: 'John', age: 18} + "<br\>" +
+        typeof new Date() + "<br\>" +
+        typeof function () {
+        } + "<br\>" +
+        typeof mycar + "<br\>" +
+        typeof null;
+
+
+    //constructor:该属性返回所有js变量的构造函数
+    //String() Number() Boolean() Array() Object() Date() Function()
+
+    function isArray(myArray) {
+       return myArray.constructor.toString().indexOf("Array")>-1;
+    }
+    function isDate(myDate) {
+       return myDate.constructor.toString().indexOf("Date")>-1;
+    }
+    var fruits = ["banana","orange","apple","Mango"];
+    document.getElementById("demo6").innerHTML = isArray(fruits);
+    console.log(fruits instanceof Array);
+    var myDate = new Date();
+    document.getElementById("demo7").innerHTML = isDate(myDate);
+    console.log((myDate instanceof Date));
+
+
+    var yy = "5";//yy 值是5 类型是string
+    var xx = + y;//xx 值是NaN 类型是number
+
+    //日期转数字  使用Number()和getTime()方法效果相同
+    var d = new Date();
+//    debugger;  //此处使用debugger关键字 暂时中断代码运行
+    console.log(Number(d));//1513232950222
+    console.log((d.getTime()));//1513232950222
+
+    //正则表达式
+
+
+
+
+    //js调试
+    // 1. console.log
+    // 2. 使用debugger关键字  debugger;
+    // 3. 在调试窗口设置断点
+
+    //js错误 trow try catch
+    /*
+        try语句测试代码块的错误
+        catch语句处理错误
+        throw语句创建自定义错误
+     */
+
+    function testTry() {
+       try {
+           addzlert("hellloooo");
+       }
+       catch(err){
+           txt = "本页有一个错误。\n\n";
+           txt += "错误描述："+err.message+"\n\n";
+           txt += "点击确定继续.\n\n";
+           alert(txt);
+       }
+    }
+
+    function testThrow() {
+       var message,x;
+       message = document.getElementById("message");
+       message.innerHTML = "";
+       x = document.getElementById("demo8").value;
+       try{
+           if(x == "") throw "值为空";
+           if (isNaN(x)) throw "不是数字";
+           x = Number(x);
+           if (x<5)throw "输入的数字太小";
+           if (x>10)throw "输入的数字太大";
+       }
+       catch(err){
+           message.innerHTML = "错误信息是："+err;
+       }
+    };
+
+    //js中的变量提升hoisting：函数声明和变量声明总是被解释器悄悄地"提升"到方法体的最顶部
+    /*
+        1.js中，函数及变量的声明都将被提升到函数的最顶部
+        2.js中，变量可以在使用后声明，也就是变量可以先使用再声明
+        3.注意：js中只有声明的变量会提升，初始化的变量不会被提升
+     */
+
+    //JS严格模式（use strict）：即JS在严格的条件下执行;
+    // 注意："use strict"指令只运行出现在脚本或函数的开头
+    /*
+        严格模式同坐在脚本或函数的头部添加"use strict";表达式来声明
+        使用严格模式的优点：1.保证代码运行的安全；2.提高编译器效率，提高运行速度；3.为新版本的js做好铺垫
+        严格模式的限制：
+            1.不能使用未声明的变量，对象
+            2.不能删除变量或对象
+            3.不允许删除函数
+            4.不允许变量重名
+            5.不能使用八进制
+            6.不能使用转义字符
+            7.不能对只读属性赋值
+            8.不允许对一个使用getter方法获取的属性赋值
+            9.不允许删除一个不允许删除的属性
+            10.变量名不能使用"eval","arguments"等字符串
+            11.不能使用如下语句：with (Math){x = cos(2)};
+            12.由于一些安全原因，在作用域 eval() 创建的变量不能被调用：
+            13.禁止this关键字指向全局对象。
+            14.不能使用保留关键字：如implements interface let package private protected public static yield
+     */
+
+    function testStrictFn() {
+        "use strict";
+        aaaa ="fff";
+//        delete aaaa;
+//        var public = 1500;
+        this.a = 1;
+    }
+
+
+</script>
+
+
+</body>
+</html>

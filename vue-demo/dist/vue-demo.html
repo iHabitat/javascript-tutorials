@@ -1,0 +1,32 @@
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Getting Started</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{message}}
+</div>
+
+<div id="app2">
+    <span v-bind:title="message">
+        停留鼠标，查看动态信息
+    </span>
+</div>
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue'
+        }
+    });
+    let app2 = new Vue({
+        el: '#app2',
+        data: {
+            message: '页面加载于: ' + new Date().toLocaleDateString()
+        }
+    });
+</script>
+</body>
+</html>

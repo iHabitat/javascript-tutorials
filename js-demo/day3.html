@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            width: 500px;
+            margin: 20px auto;
+            list-style: none;
+        }
+
+        ul li {
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            line-height: 40px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li>row1</li>
+    <li>row2</li>
+    <li>row3</li>
+    <li>row4</li>
+    <li>row5</li>
+    <li>row6</li>
+    <li>row7</li>
+    <li>row8</li>
+    <li>row9</li>
+</ul>
+<script>
+    //    testFn();
+    //执行结果报错:testFn is not defined
+    //此处报错：因为js按照代码块顺序执行,预处理的也只是执行到的代码块中的变量和函数，对于还没有加载到的代码块是没办法进行预处理的
+    //这也是边编译边处理的核心
+</script>
+<script>
+    /*
+        1.隔行变色
+        2.鼠标划入时变色
+        3.鼠标划出时恢复原来的颜色
+        4.单击某行时 弹出单击该行的行号
+     */
+    var olis = document.getElementsByTagName("li");
+    for (var i = 0; i < olis.length; i++) {
+        var oli = olis[i];
+        if (i % 2 === 0) {
+            oli.style.backgroundColor = "#ddd";
+        } else {
+            oli.style.backgroundColor = "#aee";
+        }
+        oli.oldColor = oli.style.backgroundColor;//**** 自定义属性的方法
+        oli.index = i;
+        //为每一项li对象绑定鼠标划入和鼠标划出的事件
+        oli.onmouseover = function () {
+//             oli.style.backgroundColor = "white";
+            console.log(oli);//最后一个li对象
+            console.log(this);//鼠标划入时对应的那个li对象
+            //***  这里不能直接使用oli
+            // 因为鼠标划入时候，获取到的oli已经是最后一个li了，所以这里只能使用this，this指向绑定事件时的那个li对象
+            this.style.backgroundColor = "white";
+        }
+        oli.onmouseout = function () {
+            this.style.backgroundColor = this.oldColor;
+        }
+
+        oli.onclick = function () {
+            var index = olis.indexOf(this);
+            console.log(index);
+            alert(this.index + 1);
+        }
+
+    }
+
+
+    //函数
+    /*
+        1.定义
+        2.执行
+
+        函数的核心原理
+            函数属于引用数据类型，即地址类型
+        函数定义过程
+            1.开辟新的空间地址
+            2.把函数体中的代码当做字符串存储到这个空间地址对应的堆内存中。
+            3.把空间地址赋值给函数名。
+        函数执行过程
+            1.首先会形成一个私有作用域（环境）：给函数体中的代码提供运行环境。作用域就是一种栈内存
+            2.形参赋值。
+                变量提升  正式课
+                作用域销毁
+            3.代码从上到下依次执行
+
+       ** 函数外面的代码会形成一个全局作用域。
+       ** 闭包--情况1：函数执行会形成私有作用域，保护了里面的变量不受外界的干扰。
+       *
+       函数形参实参
+            形参也是私有变量
+
+       函数中的arguments   函数自带的参数集合；只跟实参有关系，跟形参没关系
+            arguments是一个类数组。有length属性
+
+     */
+    myFunction();//"执行了声明式函数"
+    /*
+    fn();//error:fn is not a function 因为该函数是赋值式函数，js未做变量提升
+    */
+    function myFunction() {
+        console.log("执行了声明式函数")
+    }//声明式函数
+    console.log(myFunction);//函数名存储的是空间地址值，当控制台输出时，浏览器会默认把地址上存储的代码块进行输出
+    myFunction();//函数执行
+
+    var fn = function () {
+        console.log("执行了赋值式函数")
+    }//赋值式函数/函数表达式
+    fn();//赋值函数只有在赋值代码块之后执行才能起作用，否则会报错
+
+    //自执行函数:声明和执行时一起的
+    (function (arg1) {
+       console.log("自执行函数执行了") ;
+       return arg1 +100;
+    })(100);
+
+    !function () {
+    }();//自执行函数:
+    +function () {
+    }();//自执行函数:
+    -function () {
+    }();//自执行函数:
+
+    argumentsFn(12, 56, 32, 44, 67);
+    argumentsFn(12,"12px",undefined,80,0);
+
+    function argumentsFn(a, b, c) {
+        var total = 0;
+        for (var i = 0; i < arguments.length; i++) {
+            console.log("arguments.length =" + arguments.length);
+            var validNum = Number(arguments[i]);
+            if (!isNaN(validNum)){
+                //只有有效数字才进行求和
+               total += validNum;
+            }
+        }
+        console.log("valid number total====" + total);
+
+    }
+
+
+    //**  这两种方式的函数区别：在js预编译期，声明式函数将会先被提取出来，然后才按照顺序执行js代码。
+
+    //JS的解析过程分为：预编译期和执行期。
+    /* js引擎都是按照代码块进行预编译和执行的，代码块之间是相互独立的，但是变量和方法是共享的
+        预编译期是对本代码块中的变量和函数进行处理
+            注意：只处理声明式函数； 变量也只进行声明，未进行初始化和赋值；
+     */
+
+    testFn();//"执行了函数2"----同名函数后者覆盖前者
+    function testFn() {
+        console.log("执行了函数1");
+    }
+
+    function testFn() {
+        console.log("执行了函数2");
+    }
+
+
+</script>
+<script>
+    //js代码块独立，但是变量和函数是共享的
+    testFn();//"执行了函数2"
+    console.log(olis);//上一段代码块中的变量
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson1</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+            margin: 20px 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="box" onclick="fn()"></div>
+<script src="day1.js"></script>
+
+
+<p>点击按钮检测年龄。</p>
+年龄:<input id="age" value="18" />
+<p>是否达到投票年龄?</p>
+<button onclick="ageTest()">点击按钮</button>
+<p id="agedemo"></p>
+
+
+<script>
+    //免费课阶段：预习 记忆知识点
+    //html css  标记语言
+    //js   编程语言  具有逻辑性
+    /* 组成：
+    1.ECMAScript  es
+        js的核心、规范、语法、变量、数据类型、操作语句等等。
+        已经发展到ES7，浏览器支持的最新版本是ES6，常用的是(es3/es5)
+    2.DOM (Document Object Model)文档对象模型
+        提供了一系列的属性和方法让咱们可以操作页面的DOM元素
+        所谓元素：就是与html中的标签对应
+    3.BOM（Browser Object Model)浏览器对象模型
+        提供了操作浏览器的属性和方法。
+        例如：alert("You are good!");
+
+     */
+
+    //使用注释符号验证浏览器是否支持JS脚本
+    <!--
+    document.write("您的浏览器支持JS脚本");
+        -->
+
+
+    console.log(1);//控制台输出.不做类型转换；在控制台输出后，字符串是黑色的，数值是蓝色的
+    console.log([12, "dd", 0]);
+    console.dir();//控制台详细输出
+    console.table("");//控制台表格输出
+    //    document.write("");//在页面上输出内容
+    //    alert("You are very good!");//弹出。***这行代码会终止代码，点击确定后继续执行
+    //    confirm("????");//确定&取消按钮   运行机制与alert相同
+    //    prompt("ddddddddd");//较confirm，多了个输入框，点击确定时可以获取到输入框的值
+    /*
+    JS中提供的浏览器弹窗
+    alert
+    confirm
+    prompt
+    */
+
+    /*定义变量:
+     var 变量名 = 值;
+     ECMAScript的变量是松散类型的，即可以保存任何类型的数据。
+     es6中定义变量使用的是let，常量使用的是const
+     js中的命名规范：如下规则组合的一个或多个字符
+        以字母，数字，下划线，美元符号组合命名；
+        数字不能作为开头；
+        遵循驼峰命名法；
+        不能使用关键字和保留字；
+        严格区分大小写；
+
+      变量的作用域：
+        在函数内使用var声明的变量是局部变量；
+        在函数外部使用var声明的变量是全局变量；
+        没有使用var声明的变量默认是全局变量，无论这个变量在哪里使用
+
+       变量的生命周期
+        变量在声明时初始化
+        局部变量在函数执行完毕后销毁
+        全局变量在页面关闭时销毁
+    */
+    /* ES6中，使用let关键字声明变量；使用const关键字声明常量，其值一旦被设定就不能改变了；*/
+
+    var a = 100;
+    console.log(a);
+
+    var ary = [24, 5, 0, 89];
+    ary.pop();//删除数组最后一项
+    console.log(ary);
+    console.dir(ary);
+
+    //css  行内式 内嵌式 外链式 导入式
+    //js的引入方式：
+    var oBox = document.getElementById("box");
+    //    oBox.onclick = function () {
+    //        console.log("hello");
+    //
+    //    }
+
+    //    function fn() {
+    //        alert("hhahahha");
+    //    }
+
+    var languages = [{name: "JS", fileExtension: ".js"},
+        {name: "TypeScript", fileExtension: ".ts"},
+        {name: "CoffeeScript", fileExtension: ".coffee"},
+    ];
+
+    //输出方式
+    /*
+        alert，prompt，confirm；
+        console.log,console.dir,console.table;
+        document.write
+     */
+    console.log(languages);
+    console.table(languages);
+    console.table(languages, ["name", "fileExtension"]);
+    console.table(languages, "name");
+
+
+    //js中的数据类型
+    /*
+    1.基本数据类型
+        number string boolean(true/false)  null defined
+        **** NaN的属于number类型，可以使用isNaN方法判断一个数
+
+    2.引用数据类型
+        对象数据类型和函数数据类型
+            对象数据类型：普通对象，用{}表示；数组，用[]表示；正则/\d/;Math;Date
+            函数数据类型：函数
+
+     1&2 根据的区别：基本数据类型是操作值的（栈内存），引用数据类型是操作空间地址的（堆内存）
+
+     */
+    /* ES6中增加了Map、Set类型*/
+
+    console.log(true);
+    console.log(null);
+    console.log(undefined);
+
+    var obj = {a: 1, b: 2};
+    var array = [1, "dfhgjg", true, undefined];
+//    var cars = new array("BMW", "haff");
+    var reg = /\d/;
+
+    function fn1() {
+    };//函数类型
+
+    var a = b = 10;
+    b = 20;
+    console.log(a);//只改变b的值，不会影响a的值
+
+    var a = b = {c: 1};
+    a.d = 20;
+    console.log(b);//a和b指向的是同一块对内存地址，改变a或者b，另外一个也会随之改变
+
+    //使用new关键字声明变量的数据类型
+    var carname = new String;
+    var x = new Number;
+    var y = new Boolean;
+    var cars = new Array;
+    var person = new Object;
+
+
+
+    //数据类型--number类型
+    //    正数 负数 小数 0 NaN(not a number)  八进制  十六进制
+    /*
+        typeof()：检测数据类型的方法
+        isNaN() 检测当前值是不是有效数字，是有效数字返回false，不是有效数字返回true
+        Number() 把其他类型的值转换为number类型。在isNaN检测时，浏览器默认把值转换成number类型
+        parseInt() 从做左到又一次查找，直到遇到一个非有效数字停止，返回前面的内容
+        parseFloat()识别小数部分
+        toFixed() 保留小数点的位数方法，返回值是一个字符串。只有数值类型的可以调用此方法。
+
+     */
+    var num = 10;
+    console.log(typeof num);
+
+    console.log(Number("12px"));//NaN
+    console.log(parseInt("12px"));//12
+    console.log(parseInt("12.445"));//12
+    console.log(parseInt("12px0.5px"));//12
+    console.log(parseFloat("12.999999998px"));//12.99999998
+    console.log(parseFloat("ox13.fg"));//NaN
+    console.log(parseInt("kv13.3fk"));//NaN
+
+    console.log(Number([]));//0
+    console.log(parseInt([]));//NaN  二者的处理机制不一样
+    console.log(Number(NaN));//NaN
+    console.log(Number(Number(0)));
+
+    console.log(parseInt(NaN));//NaN
+
+    var number = 10.49485950;
+    console.log(number.toFixed(2));//10.49
+
+
+    //数据类型---字符串类型
+    /*
+        被""或''包起来的整体就是字符串
+        通过索引获取对应的字符。？？？如果越界了会怎么办---获取结果是undefined
+        str.length  字符串长度
+        str[index]  获取某个字符
+        字符串的运算
+            减法、乘法、除法：
+                1.首先会把字符串默认转换成number类型，然后进行运算，返回number类型的值.
+                2.任何数字和NaN进行运算得到结果都是NaN。
+            加法：拼接字符串
+
+         字符串转义：
+            \'
+            \"
+            \\  反斜杠
+            \n  换行
+            \r  回车
+            \t  制表符
+            \b  退格符
+            \f  换页符
+
+     */
+
+    var r1 = 5+5+"aa";//10aa
+    var r2 = ""+5+5+"aa";//55aa
+    var r3 = ""+5;//5
+    var r4 = "  "+5;//"  5"
+    var r5 = 13+ true;//14
+    var r6 = 7%3;//1
+    var r7 = 7%(-3);//1
+    var r8 = (-7)%3;//-1
+    var r9 = null + 3+4;//7
+    var r10 = null+"a";//nulla
+    var r11 = null+"3";//null3
+    var r12 = null + 3;//3
+
+
+    //数据类型---boolean布尔值
+    /*
+    Boolean()  强制转换成boolean类型的值。
+                只有0，NaN，空字符串，null，undefined这五个值转布尔值是false，其他全是true
+                布尔值转换成Number之后，分别是0和1
+               布尔值取反：!true  !false
+               !"3px"  先将3px转成布尔值，然后再取反  //false
+               两次取反!!"3px"  相当于没有取反，返回结果与Boolean()方法一样
+     */
+
+    /*
+      &&  并且 只有所有值为true时结果为true，其他情况都为false
+      ||  或   只有所有值为false时结果为false，其他结果都为true
+      ！   非
+
+      =  赋值
+      == 比较
+        字符串 == 布尔  都转成数字
+        字符串 == 数字   把字符串转成数字再比较
+        布尔  == 数字   把布尔转成数字在比较
+
+        null == undefined  //true
+        null === undefined  //false
+
+      ===  绝对比较
+        只要数据类型不一样，直接false，不会默认进行数据类型转换；
+        只有数据类型和值都相等时才为true。
+    */
+
+    //运算符
+    /*
+        1.比较运算符  ==  ===  != !==   >  <   <=   >=
+        2.逻辑运算符  &&   ||   ！
+        3.条件运算符 （条件）？结果1：结果2
+     */
+    function ageTest() {
+        var age,voteable;
+        age = document.getElementById("age").value;
+        voteable = (age<18)?"年龄太小":"年龄已达到";
+        document.getElementById("agedemo").innerHTML = voteable+"<br \>";
+    }
+
+    function test(p){
+        var a=5,b=12;
+        var result = p>1?p<b?p>b:p=6:p=3;
+        document.write("<br\> result="+result);
+        document.write("<br \>"+p);
+        return result; // 这一行中出现了多个问号和冒号，看起来很乱怎么办呢
+    }
+
+    document.write(test(9));
+
+
+</script>
+</body>
+</html>

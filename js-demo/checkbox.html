@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="../jquery/css/bootstrap.min.css"/>
+
+</head>
+<body>
+<div class="form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        看书
+    </label>
+</div>
+<div class="form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        写字</label>
+</div>
+<div class="form-check">
+    <label class="form-check-label">
+
+        <input class="form-check-input" type="checkbox" value="">
+        画画</label>
+</div>
+<div class="form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        打游戏</label>
+</div>
+<div class="form-check disabled">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="" disabled>
+        不可选择项</label>
+</div>
+
+<button type="button" class="btn btn-secondary btn-sm" id="checkedall">全选</button>
+<button type="button" class="btn btn-secondary btn-sm" id="uncheckedall">取消全选</button>
+
+<button type="button" class="btn btn-secondary btn-sm active" id="allcheck">全选/取消全选</button>
+
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3">Fluid jumbotron</h1>
+        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    </div>
+</div>
+
+<script src="../jquery/js/jquery-3.2.1.js"></script>
+<script>
+    function checkedAll() {
+        var objNameList = $('.form-check-input');
+        if (null != objNameList) {
+            console.log("全选操作");
+            for (var i = 0; i < objNameList.length; i++) {
+                objNameList[i].checked = "checked";
+            }
+        }
+    }
+
+    function uncheckedAll() {
+        var objNameList = $('.form-check-input');
+        if (null != objNameList) {
+            console.log("取消全部操作");
+            for (var i = 0; i < objNameList.length; i++) {
+                objNameList[i].checked = "";
+            }
+        }
+    }
+
+
+    var checkall = false;
+    function allCheck() {
+        checkall = !checkall;
+        var inputList = $('.form-check-input');
+        for(var i=0;i<inputList.length;i++){
+            inputList[i].checked = checkall;
+        }
+    }
+
+    $(document).ready(function () {
+        jQuery(function ($) {
+            $('#checkedall').on('click', function () {
+                checkedAll();
+            });
+            $('#uncheckedall').on('click', function () {
+                uncheckedAll();
+            });
+            $('#allcheck').on('click', function () {
+                allCheck();
+            });
+
+        });
+    });
+
+
+</script>
+</body>
+</html>
