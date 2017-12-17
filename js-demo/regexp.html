@@ -25,7 +25,7 @@
             1.表达式
                 [abc] 查找方括号之间的哦任何字符
                 [0-9] 查找任何0-9的数字
-                (x|y) 查找任何以|风格的选项
+                (x|y) 查找任何以|分隔的选项
             2.元字符 拥有特殊含义
                 \d 查找数字
                 \s 查找空白字符
@@ -49,16 +49,17 @@
     var index = str.search(/Beiji/i);
     console.log(index);
 
-    var txt = str.replace("beijing","shanghai");
-    var txt1 = str.replace(/Beijing/i,"guangzhou");
-    console.log("str:"+str+"    txt:"+txt+"    txt1:"+txt1);
+    var txt = str.replace("beijing", "shanghai");
+    var txt1 = str.replace(/Beijing/i, "guangzhou");
+    console.log("str:" + str + "    txt:" + txt + "    txt1:" + txt1);
 
     var patt = /e/;
-    document.write(patt.test("the aaaaa"));//true;字符串中包含"e",则返回true；否则返回false
+    document.write(patt.test("the\
+        aaa"));//true;字符串中包含"e",则返回true；否则返回false
 
     var patt1 = new RegExp("e");
-    document.write("<br \>"+patt1.test("thd ffff"));//flase
-    document.write("<br \>"+patt1.exec("the bEst thing is free"));//e
+    document.write("<br \>" + patt1.test("thd ffff"));//flase
+    document.write("<br \>" + patt1.exec("the bEst thing is free"));//e
 
     //JS判断输入是否为数字，字母，下划线组成
     function isValid(str) {
@@ -67,12 +68,12 @@
 
     document.write("<br \>使用正则表达式的方式来判断输入是否为数字、字母、下划线组成");
     var str1 = "1234_abd_";
-    document.write("<br \>str="+ str1+ isValid(str1));
+    document.write("<br \>str=" + str1 + isValid(str1));
     var str2 = "$32343#";
-    document.write("<br \>str="+str2+ isValid(str2));
+    document.write("<br \>str=" + str2 + isValid(str2));
 
     //判断字符串是否全部为字母
-    function isLetter(str){
+    function isLetter(str) {
         return /^[a-zA-Z]+$/.test(str);
     }
 
@@ -84,29 +85,34 @@
     //正则表达式表单验证
 
     //是否带有小数
-    function isDecimal(strValue){
-
+    function isDecimal(strValue) {
+        var objRegExp = /^\d+\.\d+$/;
+        return objRegExp.test(strValue);
     }
 
+    //是否中文名称组成
+    function isChina(str) {
+        var reg = /^[\u4E00-\u9FA5{2,4}]$/
+        return reg.test(str);
+    }
 
+    //校验是否由8位数字组成
+    function isStudentNo(str) {
+        var reg = /^[0-9']{8}$]/;
+        return reg.test(str);
+    }
 
+    //校验电话号码格式
+    function isTelCode(str) {
+        var reg = /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
+        return reg.test(str);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //校验邮件地址是否合法
+    function isEmail(str) {
+       var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+$/;
+       return reg.test(str);
+    }
 
 </script>
 </body>

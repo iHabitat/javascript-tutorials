@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //JS修改对象
+    /*
+        通过js不仅可以创建对象，还可以修改已有对象的行为
+        prototype属性不仅可以为构造函数定义属性和方法，还可以为本地对象添加属性和方法
+     */
+
+    //1.通过已有的方法创建新方法
+    //demo：给Number类添加toHexString方法，把数字对象转换成十六进制的字符串
+    var iNum = 15;
+    iNum.toString(2);//1111  把iNum的值转换成二进制
+    iNum.toString(16);//f    把INum的值转换成十六进制
+
+    Number.prototype.toHexString = function () {
+        return this.toString(16);
+    }
+    document.write(iNum.toHexString());//
+    Number.prototype.toBinaryString = function () {
+        return this.toString(2);
+    }
+    document.write(iNum.toBinaryString());
+
+    //2.重命名已有的方法,
+    //demo:给Array类添加enqueue()和dequeue()方法，实际上就是对push()和shift()方法的重命名，更易读
+
+    /*
+        如下是操作数组的方法，都会改变数组的长度即内容
+        push()    向数组的尾部添加一个或多个元素，并返回数组的新长度
+        pop()     删除数组的 最后一个 元素，并返回被删除的元素
+        unshift（）向数组的开头添加一个或多个元素，并返回数组的新长度
+        shift()  删除数组的 第一个 元素，并返回被删除的那个元素。
+     */
+    var arr = new Array();
+    arr.push("John","Mike");
+    console.log("arr="+arr+"  length="+arr.length);
+    arr.shift();
+    console.log("arr="+arr+"  length="+arr.length);
+
+    Array.prototype.enqueue = function (vItem) {
+        this.push(vItem);
+    }
+    Array.prototype.dequeue = function () {
+        return this.shift();
+    }
+
+    arr.enqueue("zhangsan");
+    console.log("arr="+arr+"  length="+arr.length);
+    arr.dequeue();
+    console.log("arr="+arr+"  length="+arr.length);
+
+    //添加并实现已有方法中没有的方法
+    //demo:判断某一项在数组中的位置。没有本地方法可以拿来就用，需要自己实现
+    Array.prototype.indexOf = function (vItem) {
+        for(var i=0;i<this.length;i++){
+            if (vItem === this[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+    var colorArray = new Array("red","green","blue");
+    console.log(colorArray.indexOf("green"));//1
+
+    //给本地对象添加新方法
+    // demo:给Object对象添加一个方法，警告框输出对象的当前值的方法
+    Object.prototype.showValue = function () {
+       alert(this.valueOf());
+    }
+    var str = "hello";
+    str.showValue();
+    var num = 24;
+    num.showValue();//js中，本地对象都继承于Object，对Object添加了showValue方法之后，String对象和Number对象都继承了该方法
+
+
+    function test() {
+        console.log("dd");
+    }
+    console.log(test.toString());//这时候输出的结果是test函数的代码块
+    console.log(test());//undefined  因为函数test没有return
+
+//    Function.prototype.toString = function () {
+//        return "Function code hidden";
+//    }
+    console.log(test.toString());//"Function code hidden" 注意：输出结果不是test函数的代码块
+
+
+    /*
+        1.将当前toString()方法的引用保存在属性originalToString中
+        2.用定制的方法覆盖原来的toString（）。
+            新方法检查该函数源代码的长度，如果长度大于100，返回return之后的字符串。否则返回该函数的代码块
+
+     */
+    Function.prototype.originalToString = Function.prototype.toString;
+    Function.prototype.toString = function () {
+       if (this.originalToString().length > 100){
+           return "Function is too long to display";
+       } else {
+           return this.originalToString();
+       }
+    }
+    console.log(test.toString());
+
+    // 极晚绑定 (very late binding)
+    //在对象实例化之后再定义它的方法。  一般不建议使用，很难跟踪和记录。
+
+</script>
+</body>
+</html>

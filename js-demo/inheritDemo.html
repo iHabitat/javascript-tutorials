@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //JS中的继承不是明确规定的，而是通过模仿实现的
+    /*
+        继承的方式
+        1.对象冒充 object masquerading
+        2.原型链 prototype chaining
+        3.混合方式
+     */
+
+    //对象冒充
+    function ClassA(sColor) {
+       this.color = sColor;
+       this.sayColor = function () {
+           document.write(this.color);
+           document.write("<br \>");
+       };
+    }
+    function ClassB(sColor) {
+       this.newMethod = ClassA;
+       this.newMethod(sColor);
+       delete this.newMethod;
+
+    }
+
+    var objb1 = new ClassA("red");
+    objb1.sayColor();//red
+    console.log(objb1 instanceof ClassA);//true
+
+    var objB = new ClassB("blue");
+    objB.sayColor();//blue
+    console.log(objB instanceof ClassB);//true
+    console.log(objB instanceof ClassA);//false   ??既然是继承于Class，为啥不是这种类型
+
+    /*对象冒充原理：构造函数使用this关键字给所有属性和方法赋值。
+                 因为构造函数是一个函数，所以可以使ClassA构造函数成为ClassB的方法，然后调用它。
+                 这样ClassB就会收到Class构造函数中定义的属性和方法了
+    */
+    function ClassB(sColor,sName) {
+       this.newMethod = ClassA;//为ClassA赋予了newMethod方法
+       this.newMethod(sColor); //调用该新方法，将B中的sColor参数传递给Class，初始化color属性
+       delete  this.newMethod;//删除对ClassA的引用，以后不能再调用；
+
+        // 所有为ClassB添加的新属性和新方法都在删除这个新方法之后调用，防止覆盖超类的属性和方法
+
+        //上面三句代码等同于如下使用Function对象的call()方法,apply()方法
+//        ClassA.call(this,sColor);
+//        ClassA.apply(this,new Array(sColor));//超类中的参数顺序与此处array的顺序必须一致
+
+       this.name = sName;
+       this.sayName = function () {
+           document.write("<br \>");
+          document.write(sName);
+           document.write("<br \>");
+       }
+    }
+    var objB2 = new ClassB("yellow","David");
+    objB2.sayColor();//yellow
+    objB2.sayName();//David
+
+
+    //对象冒充实现多重继承
+    //demo: ClassZ继承于ClassX和ClassY
+    function ClassX() {
+        
+    }
+    function ClassY() {
+        
+    }
+    function ClassZ(){
+        this.newMethod = ClassX;
+        this.newMethod();
+        delete this.newMethod;
+        
+        this.newMethod = ClassY;
+        this.newMethod();
+        delete this.newMethod;
+
+        //注意：如果x和yj具有同名的属性和方法，ClassY具有更高的优先级，因为它从后面的类继承
+    }
+
+
+    //原型链
+    /*
+        prototype的所有属性和方法都被传递给那个类的所有实例。
+        原型链利用prototype的功能实现继承机制
+        原型链会用另一类型的对象重写类的prototype属性
+
+        注意：原型链不支持多重继承。
+     */
+    function Class1() {
+        
+    }
+    Class1.prototype.color = "blue";
+    Class1.prototype.sayColor = function () {
+        document.write("<br \>");
+        document.write(this.color);
+        document.write("<br \>");
+    }
+     function Class2() {
+     }
+    Class2.prototype = new Class1();
+    Class2.prototype.sayName = function () {
+        document.write(this.name);
+        document.write("<br \>");
+    }
+    var c1 = new Class1();
+    var c2 = new Class2();
+    c1.color = "black";
+    c2.color = "white";
+    c2.name = "Haha";
+    c1.sayColor();
+    c2.sayColor();
+    c2.sayName();
+    console.log(c2 instanceof Class1);//true
+    console.log(c2 instanceof Class2);//true
+
+
+    //混合方式：用对象冒充继承构造函数的属性；用原型链继承prototype对象的方法
+    function Class3(sColor) {
+       this.color = sColor;
+    }
+    Class3.prototype.sayColor = function () {
+        document.write("<br \>");
+        document.write(this.color);
+        document.write("<br \>");
+    }
+    function Class4(sColor,sName) {
+        Class3.call(this,sColor);
+        this.name = sName;
+    }
+    Class4.prototype = new Class3();
+    Class4.prototype.sayName = function () {
+        document.write("<br \>");
+        document.write(this.name);
+        document.write("<br \>");
+    }
+
+    var c3 = new Class3();
+    var c4 = new Class4();
+    c3.color = "black";
+    c4.color = "white";
+    c4.name = "Haha";
+    c3.sayColor();
+    c4.sayColor();
+    c4.sayName();
+    console.log(c4 instanceof Class3);//true
+    console.log(c4 instanceof Class4);//true
+
+
+</script>
+</body>
+</html>

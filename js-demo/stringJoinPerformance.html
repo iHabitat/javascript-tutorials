@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //JS的字符串是不可变的
+    /*
+        字符串链接
+        1.使用 + 号   非常消耗资源
+        2.使用join()方法
+
+        原理上来说方法1比方法2复杂度要高，性能消耗更大
+        在chrome浏览器中，结果1<结果2
+        safari   结果1>结果2
+     */
+
+    /*
+        1.创建存储hello的字符串
+        2.创建存储world的字符串
+        3.创建存储连接结果的字符串
+        4.把str的当前内容复制到结果中
+        5.把world复制到结果中
+        5.更新str，使它指向结果
+
+        缺点：性能消耗很大
+        解决办法：用Array对象存储字符串，然后使用join()方法创建最后的结果字符串
+     */
+    var str = "hello";
+    str += "world";
+
+    /*
+        1.创建存储结果的字符串
+        2.把数组中的每一个字符串复制到结果中的合适位置
+
+        缺点：不能够很好的反映意图，不容易理解
+        解决方法：使用StringBuffer类打包该功能
+     */
+     var arr = new Array();
+     arr[0] = "hello";
+     arr[1] = "world";
+     var rel = arr.join();
+
+     /*
+        使用混合的构造函数/原型方法 定义stringBuffer类 实现拼接字符串
+      */
+    function StringBuffer() {
+       this._strings_ = new Array(); 
+    }
+    StringBuffer.prototype.append = function (str) {
+        this._strings_.push(str);
+    }
+    StringBuffer.prototype.toString = function () {
+        return this._strings_.join("");
+    }
+
+    var stringBuffer = new StringBuffer();
+    stringBuffer.append("hello");
+    stringBuffer.append("world");
+    var result = stringBuffer.toString;
+
+    //两种实现方式的性能测试
+    var d1 = new  Date();
+    var str = "";
+    for(var i=0;i<10000;i++){
+        str += "text";
+    }
+    var d2 = new Date();
+    document.write("Concetenation with plus: "+(d2.getTime()-d1.getTime())+" milliseconds");
+
+    var d1 = new Date();
+    var buffer = new StringBuffer();
+    for(var i=0;i<10000;i++){
+        buffer.append("text");
+    }
+    var rel = buffer.toString();
+    var d2 = new Date;
+    document.write("<br\>Concetenation with StringBuffer: "+(d2.getTime()-d1.getTime())+" milliseconds");
+
+
+
+
+</script>
+
+</body>
+</html>

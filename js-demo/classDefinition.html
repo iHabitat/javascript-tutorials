@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>dddd</p>
+<script>
+    // 闭包 closure
+    //   函数可以使用函数之外的变量
+
+    //简单的闭包实例：函数使用全局变量
+    var sMessage = "hello javascript";
+    function sayHello() {
+       alert(sMessage); //在函数内部使用全局变量sMessage
+    }
+    sayHello();
+
+    document.write("ffff");
+    
+    //复杂的闭包实例
+    var iBaseNum = 10;
+    function addNum(iNum1,iNum2) {
+       function doAdd() {
+          return iNum1 + iNum2 + iBaseNum;//doAdd函数不接受任何参数，它内部使用的变量都是从执行环境中获取到的。
+       }
+       return doAdd();
+    }
+
+    var result = addNum(2,1);
+    console.log(result);
+
+
+    //ECMAScript 对象
+    var oCar = new Object();
+    oCar.color = "red";
+    oCar.showColor = function () {
+       alert(this.color);
+    }
+    oCar.showColor();
+
+    function showColor() {
+       console.log(this.color) ;//此处使用this的好处：在下面实例化对象时，事先不知道变量名的时候，也可以调用此函数
+
+//      return this.color;
+    }
+    var oCar1 = new Object();
+    oCar1.color = "yellow";
+    oCar1.showColor = showColor;
+
+    var oCar2 = new Object();
+    oCar2.color = "blue";
+    oCar2.showColor = showColor;
+
+    console.log(oCar1.showColor);//结果：函数代码块
+    console.log((oCar2.showColor));//代码块
+    oCar1.showColor();//结果：yellow
+    oCar2.showColor();//blue
+
+    //showColor函数有return值的时候，输出值；没有值或者没有return语句
+    console.log(oCar1.showColor());//undefined
+    console.log(oCar2.showColor());//undefined
+
+
+
+    //工厂方法:创建并返回特定类型的对象
+        /*
+             缺陷1：语义原因：语义上不太正规
+             缺陷2：功能原因：每调用一次create，都会创建新函数showColor，即每个对象都有自己的showColor()版本。
+                            实际上是所有的对象都共用一个showColor()函数
+
+             解决方法：在工厂函数create外面定义对象的方法newShowColor(),然后通过属性指向该方法。
+             解决方法的缺陷：语义上看，newShowColor()不太像是对象的方法。
+         */
+
+    function newShowColor() {
+        alert(this.color);
+    }
+    function createCar(sColor,iDoors,iMpg) {
+        var oTempCar = new Object();
+        oTempCar.color = sColor;
+        oTempCar.doors = iDoors;
+        oTempCar.mpg = iMpg;
+//        oTempCar.showColor = function () {
+//           alert(this.color);
+//        };
+        oTempCar.showColor = newShowColor;
+        return oTempCar;
+    }
+    var oCar3 = createCar("pink",4,23);
+    var oCar4 = createCar("orange",3,34);
+    oCar3.showColor();
+    oCar4.showColor();
+
+
+    //构造函数方法
+    /*
+        选择类名作为构造函数的名字，首字母大写
+        构造函数内部没有创建对象，而是使用了this关键字
+        原理：
+            使用new 构造 函数时，在执行第一行代码前，先创建一个兑现个，这个对象只有this才能访问；
+            然后直接赋予this属性，默认情况下将this作为构造函数的返回值，不必明确使用return语句
+        缺陷：同工厂函数一样，重复生成showColor函数，抽取该函数后，还是存在语义问题，即不太像对象的方法
+        解决方法：原型方式
+     */
+    function Car(sColor,iDoors,iMpg) {
+       this.color = sColor;
+       this.doors = iDoors;
+       this.mpg = iMpg;
+       this.showColor = function () {
+           console.log(this.color);
+       }
+    }
+    var oCar5 = new Car("gred",3,12);
+    var oCar6 = new Car("gblue",4,23);
+//    debugger;
+    console.log("oCar5是否属于Car类型："+ (oCar5 instanceof Car));//true
+
+    //原型方法
+    /*
+        原理：该方式利用了对象的prototype属性，，可以把他看成是创建新对象时所依赖的原型
+        步骤：利用空构造函数设置类名；然后所有的属性和方法都被直接赋予prototype属性
+        优势：1.语义上来看，所有属性都属于一个对象.
+             2.使用这种方式创建对象，可以用instanceOf检查给定变量指向的对象的类型
+        缺陷：1.构造函数没有参数，不能通过函数传递参数来设置属性的值。这也意味着创建对象之后才能改变它的默认值
+             2.当属性指向的是对象时，对象很少被多个实例共享；如下例中的drivers属性
+                当属性指向的是函数时，函数共享不会有问题
+        解决方式：联合使用构造函数和原型方式
+     */
+    function Car() {
+        
+    }
+    Car.prototype.color = "green";
+    Car.prototype.doors = 4;
+    Car.prototype.mpg = 23;
+    Car.prototype.drivers = new Array("Mike","John");
+    Car.prototype.showColor = function () {
+        console.log(this.color);
+    };
+    var oCar7 = new Car();
+    var oCar8 = new Car();
+
+    console.log("oCar7是否属于Car类型："+ (oCar7 instanceof Car));//true
+    console.log("oCar8是否属于Car类型："+ (oCar8 instanceof Car));//true
+
+    oCar7.drivers.push("David");
+    //此处给oCar7的drives新增一个值之后，oCar8的drives的值也会跟着变.因为这两个实例指向的是同一个数组
+    console.log("为oCar7的drivers属性新增David之后，oCars7==="+oCar7.drivers);//"Mike,John,David"
+    console.log("为oCar7的drivers属性新增David之后，oCars8==="+oCar8.drivers);//"Mike,John,David"
+
+    // 混合的构造函数/原型方式：经典使用
+    /*
+        原则：就是用构造函数定义对象的非函数属性，用原型方式定义对象的方法
+        优点：1.所有函数只创建一次，所有实例都可以共享。节省内存
+             2.每个对象都具有自己的属性。
+             3.因为使用了原型方法，所以仍然可以用instanceof运算符来判断对象的类型
+        编码风格不够友好：在构造函数内部找属性，在构造函数外部找方法。
+        更友好的方案：动态原型方法或者混合工厂方法
+     */
+    function Car(sColor,iDoors,iMpg) {
+       this.color = sColor;
+       this.doors = iDoors;
+       this.mpg = iMpg;
+       this.drivers = new Array("Mike","John");
+    }
+
+    Car.prototype.showColor = function () {
+       console.log(this.color);
+    }
+
+    var oCar9 = new Car("red",3,24);
+    var oCar10 = new Car("blue",5,56);
+     oCar9.drivers.push("David");
+
+    console.dir(oCar9);
+    console.dir(oCar10);
+
+    //动态原型方法：常用
+    /*
+        基本与混合的构造函数/原型方式相同。
+        相同点：在构造函数内定义非函数属性，利用原型属性定义函数属性
+        不同点：赋予对象方法的位置不同
+     */
+    function Car(sColor,iDoors,iMpg) {
+       this.color = sColor;
+       this.doors = iDoors;
+       this.mpg = iMpg;
+       this.drivers = new Array("Mike","John");
+
+       /*
+       判断_initialized值是否已经被定义。
+       若为undefined，该构造函数将用原型方式继续定义对象的方法，并且将Car._initialized的值设置为true；
+       若为true，则不进行创建
+        */
+       if (typeof Car._initialized  == "undefined"){
+           Car.prototype.showColor = function () {
+              console.log(this.color);
+           }
+       }
+       //使用_initialized标志来判断是否已经给原型赋予了任何方法
+       Car._initialized = true;
+    }
+
+    //混合工厂方式：应尽量避免使用该方式
+    /*
+        思想：创建假的构造函数，只返回另一种对象的新实例
+     */
+
+    /*
+    function Car() {
+        var oTempCar = new object;
+        oTempCar.color = "ll";
+        oTempCar.doors = 4;
+        oTempCar.mpg = 25;
+        oTempCar.showColor = function () {
+            console.log(this.color);
+        }
+        return oTempCar;
+    }
+    var testCar = new Car();//由于在构造函数内部调用了new，所以将忽略第二个new（即构造函数外的new）,在构造函数内部创建的对象被传回给白能量test
+    */
+
+
+</script>
+</body>
+</html>
