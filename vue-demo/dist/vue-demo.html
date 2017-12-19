@@ -1,7 +1,14 @@
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <title>Getting Started</title>
     <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        // 定义名为todo-item的新组件
+        Vue.component('todo-item', {
+            template: '<li>this is a todo.</li>'
+        })
+    </script>
 </head>
 <body>
 <div id="app">
@@ -14,6 +21,36 @@
     </span>
 </div>
 
+<div id="app3">
+    <span v-if="seen">
+        Now u see me
+    </span>
+</div>
+
+<div id="app4">
+    <ol>
+        <li v-for="todo in todos">
+            {{ todo.text }}
+        </li>
+    </ol>
+</div>
+
+<div id="app5">
+    <p>{{message}}</p>
+    <button v-on:click="reverseMessage">ReverseMessage</button>
+</div>
+
+<div id="app6">
+    <p>{{message}}</p>
+    <input v-model="message">
+</div>
+
+<div id="app7">
+    <ul>
+        <todo-item></todo-item>
+    </ul>
+</div>
+
 <script>
     let app = new Vue({
         el: '#app',
@@ -21,11 +58,53 @@
             message: 'hello vue'
         }
     });
+
     let app2 = new Vue({
         el: '#app2',
         data: {
             message: '页面加载于: ' + new Date().toLocaleDateString()
         }
+    });
+
+    let app3 = new Vue({
+        el: '#app3',
+        data: {
+            seen: true
+        }
+    });
+
+    let app4 = new Vue({
+        el: '#app4',
+        data: {
+            todos: [
+                {text: 'Learn Javascript'},
+                {text: 'Learn Vue'},
+                {text: 'Build Something awesome'}
+            ]
+        }
+    });
+
+    let app5 = new Vue({
+        el: '#app5',
+        data: {
+            message: 'hello timmy!'
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('');
+            }
+        }
+    });
+
+    let app6 = new Vue({
+        el: '#app6',
+        data: {
+            message: 'hello timmy'
+        }
+    });
+
+    let app7 = new Vue({
+        el: '#app7'
     });
 </script>
 </body>
