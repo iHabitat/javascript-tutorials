@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+    div{
+        /*标题和图片向右侧浮动*/
+        float: right;
+        width: 120px;
+        border: 1px dotted black;
+        margin: 0px 0px 15px 15px;
+        text-align: center;
+        padding:20px;
+    }
+    span {
+        /*段落的第一个字符浮动到左侧*/
+        float: left;
+        font-family: Courier Arial;
+        font-size: 400%;
+        width: 1.2em;
+        line-height: 80%;
+    }
+     .thumbnail{
+         float: left;
+         width: 95px;
+         height:85px;
+         border: 1px solid black;
+         margin:5px;
+     }
+        .text_line{
+            margin-bottom: 2px;
+            /*清除浮动：clear属性
+                both 指定元素两侧不能出现浮动元素
+                left right none inherit
+                */
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<p>在下面的段落中，我们添加了一个 <b>float:right</b> 的图片。导致图片将会浮动在段落的右边。</p>
+<div>
+        <img src="logocss.gif" width="95" height="84" /><br\>
+    css is fun!
+</div>
+    <p>
+    <span>李</span>这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+    这是一些文本。这是一些文本。这是一些文本。
+</p>
+
+<h3>图片库</h3>
+
+<h4>第一行</h4>
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<h4 class="text_line">第二行</h4>
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+<img class="thumbnail" src="logocss.gif" width="95" height="84" />
+
+</body>
+</html>

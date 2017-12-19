@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        /*
+            position  指定元素的定位类型
+                static html的默认值 没有定位 出现在正常的流中 static定位的元素不受到top right bottom left的影响
+                relative
+                    相对定位的元素时相对于其正常位置
+                    相对定位元素常被用来作为绝对定位元素的容器块
+                fixed
+                    元素的位置相对于浏览器窗口是固定的，即使窗口滚动，它也不会移动
+                    注意：在ie7,ie8下需要描述！DOCTYPE才能支持；
+                         fixed定位的元素与文档流无关，因此不占据空间
+                         fixed定位的元素与其他元素重叠
+                absolute
+                    绝对定位的元素相对于最近的已定位的父元素。如果父元素没有已定位的，那么他的位置就相对于html
+                    绝对定位使元素的位置与文档流无关，因此不占用空间
+                    绝对定位的元素与其他元素重叠
+
+                    z-index属性指定了堆叠顺序
+         */
+        #pos-demo{
+            width: 100%;
+            height: 200px;
+            /*overflow属性设置滚动条 以适应元素的内容大于指定区域的大小时的情况
+                scroll 滚动条显示内容
+                hidden 只显示可见的部分
+                auto 浏览器自动溢出
+            */
+            overflow: scroll;
+            background: #1B6AAA scroll;
+        }
+
+        .pos_fixed{
+            /*相对于浏览器窗口的固定位置*/
+            position: fixed;
+            top:30px;
+            right:10px;
+
+        }
+        .pos_relative_left{
+            /*相对于正常位置向左移动20px*/
+            position: relative;
+            left: -20px;
+        }
+        .pos_relative_right{
+            /*相对于正常位置向右移动20px*/
+            position: relative;
+            left:20px;
+
+            /*相对于向上移动40px  会与上面的元素重叠 因它原本所占的空间不变*/
+            top: -40px;
+
+            /*设置元素的堆叠顺序*/
+            z-index: 2;
+        }
+        .pos_absolute{
+            width: 300px;
+            height: 300px;
+
+            position: fixed;
+            top: 40%;
+            left: 40%;
+
+            background-color: red;
+
+        }
+        h3{
+            position: absolute;
+            top: 20%;
+            left: 20%;
+        }
+
+        image{
+            position: absolute;
+            /*裁剪元素的外形*/
+            clip:rect(0px,60px,200px,0px);
+        }
+    </style>
+</head>
+<body>
+<div id="pos-demo">
+    <p class="pos_fixed">some more text is fixed:top&right</p>
+    <p class="pos_relative_left">this text use 'relative:-20px'</p>
+    <img src="../jquery/resources/testimagel.jpg" />
+    <p class="pos_relative_right">this text use 'relative:20px'</p>
+    <p>anthoer text is not fixed</p>
+    <p>anthoer text is not fixed67</p>
+    <p>anthoer text is not fixed44</p>
+    <p>anthoer text is not fixed11</p>
+    <div class="pos_absolute">
+    <h3>这是一个绝对定位了的标题</h3>
+    </div>
+</div>
+</body>
+</html>
