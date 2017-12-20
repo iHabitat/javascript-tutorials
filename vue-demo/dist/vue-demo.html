@@ -6,7 +6,8 @@
     <script>
         // 定义名为todo-item的新组件
         Vue.component('todo-item', {
-            template: '<li>this is a todo.</li>'
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
         })
     </script>
 </head>
@@ -47,7 +48,8 @@
 
 <div id="app7">
     <ul>
-        <todo-item></todo-item>
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id">
+        </todo-item>
     </ul>
 </div>
 
@@ -104,7 +106,14 @@
     });
 
     let app7 = new Vue({
-        el: '#app7'
+        el: '#app7',
+        data: {
+            groceryList: [
+                {id: 0, text: '奶酪'},
+                {id: 0, text: '蔬菜'},
+                {id: 0, text: '其他'}
+            ]
+        }
     });
 </script>
 </body>
