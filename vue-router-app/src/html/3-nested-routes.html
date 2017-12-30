@@ -1,3 +1,4 @@
+<!-- 嵌套渲染 -->
 <script src="../../node_modules/vue/dist/vue.js"></script>
 <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
 <div id="app">
@@ -9,6 +10,7 @@
   <router-view></router-view>
 </div>
 <script>
+  // User组件将会在 `app` 下的 <router-view> 中渲染
   const User = {
     template: `
         <div class="user">
