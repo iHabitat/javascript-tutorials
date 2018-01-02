@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  const items = [1, 2, 3, 4, 5];
+  let sum = items.reduce((prev, cur, index, items) => {
+    console.log(prev, cur, index);
+    return prev + cur;
+  });
+  console.log(sum);
+
+  let sum1 = items.reduce((prev, cur) => {
+    console.log(prev, cur);
+    return prev + cur;
+  }, 1);
+  console.log(sum1);
+</script>
+</body>
+</html>
