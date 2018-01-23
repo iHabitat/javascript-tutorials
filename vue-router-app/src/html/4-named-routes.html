@@ -3,4 +3,32 @@
 <script src="../../node_modules/vue-router/dist/vue-router.js"></script>
 <div id="app">
 </div>
-<script src="4-named-routes.js"></script>
+<script>
+  const Home = { template: '<div>This is Home.</div>' };
+  const Foo = { template: '<div>This is Foo.</div>' };
+  const Bar = { template: '<div>This is Bar {{ $route.params.id }}.</div>' };
+
+  const router = new VueRouter({
+    routes: [
+      { path: '/', name: 'home', component: Home },
+      { path: '/foo', name: 'foo', component: Foo },
+      { path: '/bar/:id', name: 'bar', component: Bar },
+    ],
+  });
+
+  const app = new Vue({
+    router,
+    template: `
+<div id="app">
+  <h2>Named Routes</h2>
+  <p>Current route name: {{ $route.name }}</p>
+  <ul>
+    <li><router-link :to="{ name: 'home' }">home</router-link></li>
+    <li><router-link :to="{ name: 'foo' }">foo</router-link></li>
+    <li><router-link :to="{ name: 'bar', params: { id: 123 }}">bar</router-link></li>
+  </ul>
+  <router-view class="view"></router-view>
+</div>
+    `,
+  }).$mount('#app');
+</script>

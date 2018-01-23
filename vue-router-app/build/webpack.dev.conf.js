@@ -1,5 +1,5 @@
 'use strict'
-const utils = require('./utils')
+const utils = require('./utils');
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
@@ -51,7 +51,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true
     }),
   ]
-})
+});
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
