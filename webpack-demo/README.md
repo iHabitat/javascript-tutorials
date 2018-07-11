@@ -18,4 +18,10 @@
 因此我们还需要安装webpack-cli: `npm install webpack-cli --save-dev`
 
 
+## webpack-dev-server热更新功能
+
+我们可以直接在`main.js`文件通过js代码更新index.html的标签内容，更新后不用刷新浏览器，页面内容就会自动更新。这是因为webpack-dev-server是
+通过**建立一个WebSocket连接来实时响应代码的修改**。
+
+
 
