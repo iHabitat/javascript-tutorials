@@ -10,5 +10,12 @@
 4. 安装webpack dev server: `npm install webpack-dev-server --save-dev`
 5. 创建webpack配置文件: `touch webpack.config.js`
 6. 在package.json文件的`scripts`中增加快速启动webpack-dev-server服务的脚本。
-7. 配置webpack中最重要的两项：**入口**`entry`和**出口**`output`
+7. 新建main.js作为入口的文件：`touch main.js`
+8. 配置webpack中最重要的两项：**入口**`entry`和**出口**`output`
+9. 创建一个index.html，就可以直接运行服务了。`npm run dev`
+
+> 这里需要注意的是，我在按照上面步骤配置完以后，运行服务的时候报了如下错：`Error: Cannot find module 'webpack-cli/bin/config-yargs'`，
+因此我们还需要安装webpack-cli: `npm install webpack-cli --save-dev`
+
+
 
