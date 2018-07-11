@@ -1,4 +1,5 @@
 var path = require('path');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var config = {
   entry: {
@@ -14,12 +15,24 @@ var config = {
       {
         test: /\.css$/,
         use: [
-            'style-loader',
-            'css-loader'
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
+          'css-loader'
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    // rename the extracted css files.
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
+  ]
 };
 
 module.exports = config;
