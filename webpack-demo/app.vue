@@ -1,15 +1,26 @@
 <template>
-    <div>hello {{name}}</div>
+    <div>
+        <v-title title="Vue组件化"></v-title>
+        <v-button @click="handleClick">Click Me...</v-button>
+    </div>
 </template>
 
 <script>
-    export default {
-      data() {
-        return {
-          name: 'Vue.js'
-        }
+  // import components
+  import vTitle from './title.vue';
+  import vButton from './button.vue';
+
+  export default {
+    components: {
+      vTitle,
+      vButton
+    },
+    methods: {
+      handleClick(e) {
+        console.log(e);
       }
     }
+  }
 </script>
 
 <style scoped>
