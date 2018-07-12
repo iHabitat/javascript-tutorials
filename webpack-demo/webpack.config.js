@@ -1,5 +1,6 @@
 var path = require('path');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 var config = {
   entry: {
@@ -12,6 +13,15 @@ var config = {
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.css$/,
         use: [
@@ -31,7 +41,10 @@ var config = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
+    }),
+
+    new VueLoaderPlugin()
+
   ]
 };
 
