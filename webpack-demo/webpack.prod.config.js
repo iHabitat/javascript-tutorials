@@ -20,12 +20,6 @@ module.exports = merge(webpackBaseConfig, {
       chunkFilename: "[id].css"
     }),
     new VueLoaderPlugin(),
-    // 定义当前node环境为生成环境
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
     // 提取模板，并保存入口html文件
     new HtmlWebpackPlugin({
       filename: '../index_prod.html',
