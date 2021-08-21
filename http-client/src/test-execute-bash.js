@@ -1,7 +1,7 @@
 /**
  * 该脚本是用于测试agent执行任务时的超时场景。
  */
-const http = require('http');
+const http = require("http");
 
 const options = {
   hostname: "192.168.68.92",
@@ -11,7 +11,7 @@ const options = {
   headers: {
     "Content-Type": "application/json",
     operator: "tangguike"
-  },
+  }
 };
 
 const req = http.request(options, res => {
@@ -28,7 +28,7 @@ const req = http.request(options, res => {
 });
 
 const command = JSON.stringify({
-  ips: ['192.168.68.79', '192.168.68.64'],
+  ips: ["192.168.68.79", "192.168.68.64"],
   cmd: "sleep 30s",
   timeout: 2,
   async: false
